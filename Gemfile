@@ -46,6 +46,7 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem "annotate"
   gem "rubocop", require: false
 end
 
@@ -58,3 +59,5 @@ gem "dotenv-rails", "~> 2.8"
 gem "rswag", "~> 2.9"
 
 gem "devise-jwt", "~> 0.10.0"
+
+gem "fast_jsonapi", "~> 1.5"

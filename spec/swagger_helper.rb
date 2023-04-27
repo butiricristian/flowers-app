@@ -79,9 +79,11 @@ RSpec.configure do |config|
             type: 'object',
             properties: {
               name: { type: 'string' },
-              price: { type: 'integer' },
-              user_id: { type: 'integer' },
-              orders_flower_id: { type: 'integer' }
+              creator_id: { type: 'integer' },
+              status: {
+                type: 'string',
+                enum: %w[pending delivered canceled]
+              }
             }
           }
         }
