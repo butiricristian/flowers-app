@@ -3,7 +3,7 @@ module Api
     class OrdersController < ApplicationController
       def index
         @orders = Order.all
-        render json: OrderSerializer.new(@orders).serialized_json
+        render json: orders_list
       end
 
       def create
@@ -27,11 +27,16 @@ module Api
       private
 
       def order_params
-        params.require(:order).permit(:creator_id, :status)
+        params.require(:order).permit(:creator_id, :status, :address,
+                                      flowers_orders_attributes: [:flower_id, :quantity])
       end
 
       def error_response
         { message: "The order could not be created: #{@order.errors.full_messages}" }
+      end
+
+      def orders_list
+        OrderSerializer.new(@orders, include: [:flowers_orders]).serialized_json
       end
     end
   end

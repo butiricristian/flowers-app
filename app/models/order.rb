@@ -1,5 +1,9 @@
 class Order < ApplicationRecord
   belongs_to :creator, class_name: "User"
+  has_many :flowers_orders
+  has_many :flowers, through: :flowers_orders
+
+  accepts_nested_attributes_for :flowers_orders
 
   enum status: %i[pending delivered canceled]
 end

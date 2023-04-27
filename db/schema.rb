@@ -10,9 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_27_202426) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_27_212558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "flowers", force: :cascade do |t|
+    t.string "name"
+    t.string "species"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "USD", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "flowers_orders", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "flower_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flower_id"], name: "index_flowers_orders_on_flower_id"
+    t.index ["order_id"], name: "index_flowers_orders_on_order_id"
+  end
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti"
@@ -45,5 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_27_202426) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "flowers_orders", "flowers"
+  add_foreign_key "flowers_orders", "orders"
   add_foreign_key "orders", "users", column: "creator_id"
 end

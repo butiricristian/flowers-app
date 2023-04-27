@@ -1,6 +1,8 @@
 class OrderSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :status, :creator
+  attributes :status, :address, :creator
+
+  has_many :flowers_orders
 end
 
 # == Schema Information

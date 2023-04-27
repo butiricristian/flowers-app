@@ -19,8 +19,12 @@ RSpec.describe 'api/v1/orders', type: :request do
     post('create order') do
       order_data = {
         order: {
-          created_by_id: 1,
-          status: 'pending'
+          creator_id: 2,
+          status: 'pending',
+          flowers_orders_attributes: [
+            { flower_id: 1, quantity: 1 },
+            { flower_id: 2, quantity: 2 }
+          ]
         }
       }
 

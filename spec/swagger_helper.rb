@@ -78,8 +78,8 @@ RSpec.configure do |config|
           order: {
             type: 'object',
             properties: {
-              name: { type: 'string' },
               creator_id: { type: 'integer' },
+              address: { type: 'string' },
               status: {
                 type: 'string',
                 enum: %w[pending delivered canceled]

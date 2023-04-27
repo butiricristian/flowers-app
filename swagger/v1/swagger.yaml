@@ -35,8 +35,13 @@ paths:
                 summary: An order example
                 value:
                   order:
-                    created_by_id: 1
+                    creator_id: 2
                     status: pending
+                    flowers_orders_attributes:
+                    - flower_id: 1
+                      quantity: 1
+                    - flower_id: 2
+                      quantity: 2
   "/api/v1/orders/{id}":
     parameters:
     - name: id
@@ -218,10 +223,10 @@ components:
     order:
       type: object
       properties:
-        name:
-          type: string
         creator_id:
           type: integer
+        address:
+          type: string
         status:
           type: string
           enum:
