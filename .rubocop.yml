@@ -6,3 +6,11 @@ AllCops:
 Style/NumericLiterals:
   Exclude:
     - db/schema.rb
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
+    - config/initializers/**/*.rb

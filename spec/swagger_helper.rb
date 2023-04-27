@@ -24,14 +24,68 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }
-      ]
+      ],
+      components: {
+        schemas: {
+          errors_object: {
+            type: 'object',
+            properties: {
+              errors: { '$ref' => '#/components/schemas/errors_map' }
+            }
+          },
+          errors_map: {
+            type: 'object',
+            additionalProperties: {
+              type: 'array',
+              items: { type: 'string' }
+            }
+          },
+          user_form: {
+            type: 'object',
+            properties: {
+              email: { type: 'string' },
+              password: { type: 'string' },
+              username: { type: 'string', nullable: true },
+              phone_number: { type: 'string', nullable: true }
+            },
+            required: %w[email password]
+          },
+          user: {
+            allOf: [
+              { "$ref" => "#/components/schemas/user_form" },
+              {
+                type: "object",
+                properties: {
+                  id: { type: 'string' }
+                }
+              }
+            ]
+          },
+          flower: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              price: { type: 'integer' }
+            }
+          },
+          order: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              price: { type: 'integer' },
+              user_id: { type: 'integer' },
+              orders_flower_id: { type: 'integer' }
+            }
+          }
+        }
+      }
     }
   }
 

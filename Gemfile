@@ -56,3 +56,5 @@ gem "faker", "~> 3.2"
 gem "dotenv-rails", "~> 2.8"
 
 gem "rswag", "~> 2.9"
+
+gem "devise-jwt", "~> 0.10.0"
