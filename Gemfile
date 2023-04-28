@@ -64,3 +64,5 @@ gem "devise-jwt", "~> 0.10.0"
 gem "fast_jsonapi", "~> 1.5"
 
 gem "money-rails", "~> 1.15"
+
+gem "pundit", "~> 2.3"

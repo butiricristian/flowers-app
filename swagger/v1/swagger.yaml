@@ -51,7 +51,7 @@ paths:
                   order:
                     creator_id: 2
                     status: pending
-                    address: 5278 Davina Port, New Beatrice, VT 92626
+                    address: 89677 Schmidt Ramp, Cummerataburgh, ND 84606-0767
                     flowers_orders_attributes:
                     - flower_id: 1
                       quantity: 1
@@ -92,6 +92,7 @@ paths:
                 value:
                   order:
                     status: delivered
+                    address: Suite 979 521 Lenard Junctions, Durganberg, UT 32132
                     flowers_orders_attributes:
                     - flower_id: 1
                       quantity: 2

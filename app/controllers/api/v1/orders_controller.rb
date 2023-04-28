@@ -18,6 +18,7 @@ module Api
 
       def update
         @order = Order.find(params[:id])
+        authorize @order
         if @order.update(order_params)
           render json: OrderSerializer.new(@order).serialized_json, status: :ok
         else
