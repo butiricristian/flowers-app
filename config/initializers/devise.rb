@@ -280,6 +280,7 @@ Devise.setup do |config|
   config.warden do |manager|
     manager.scope_defaults :user, store: false
     manager.scope_defaults :admin, store: false
+    manager.failure_app = CustomFailureApp
   end
 
   # ==> Mountable engine configurations

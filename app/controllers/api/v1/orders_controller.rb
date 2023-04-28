@@ -1,6 +1,6 @@
 module Api
   module V1
-    class OrdersController < ApplicationController
+    class OrdersController < BaseController
       def index
         @orders = Order.all
         render json: orders_list
@@ -36,7 +36,7 @@ module Api
       end
 
       def orders_list
-        OrderSerializer.new(@orders, include: [:flowers_orders]).serialized_json
+        OrderSerializer.new(@orders, include: [:creator, :flowers_orders]).serialized_json
       end
     end
   end

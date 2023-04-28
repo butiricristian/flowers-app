@@ -9,6 +9,8 @@ paths:
       summary: list orders
       tags:
       - Orders
+      security:
+      - bearer_auth: []
       responses:
         '200':
           description: successful
@@ -74,15 +76,38 @@ paths:
                 summary: An order example
                 value:
                   order:
-                    created_by_id: 1
-                    status: pending
+                    status: delivered
     put:
       summary: update order
       tags:
       - Orders
+      description: Allows the user to replace an order. Only the creator of the order
+        can update it
+      parameters: []
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order:
+                  schema:
+                    "$ref": "#/components/schemas/order"
+            examples:
+              order:
+                summary: An order example
+                value:
+                  order:
+                    creator_id: 2
+                    status: pending
+                    flowers_orders_attributes:
+                    - flower_id: 1
+                      quantity: 1
+                    - flower_id: 2
+                      quantity: 2
   "/users":
     post:
       summary: create registration
@@ -178,6 +203,10 @@ servers:
     defaultHost:
       default: localhost:3000
 components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
   schemas:
     errors_object:
       type: object

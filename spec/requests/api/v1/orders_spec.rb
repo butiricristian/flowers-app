@@ -4,7 +4,13 @@ RSpec.describe 'api/v1/orders', type: :request do
   path '/api/v1/orders' do
     get('list orders') do
       tags 'Orders'
+      security [bearer_auth: []]
+      consumes 'application/json'
+      produces 'application/json'
+
       response(200, 'successful') do
+        let(:Authorization) { "Bearer <jwt_token>" }
+
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -59,8 +65,7 @@ RSpec.describe 'api/v1/orders', type: :request do
     patch('update order') do
       order_data = {
         order: {
-          created_by_id: 1,
-          status: 'pending'
+          status: 'delivered'
         }
       }
 
@@ -91,7 +96,29 @@ RSpec.describe 'api/v1/orders', type: :request do
     end
 
     put('update order') do
+      order_data = {
+        order: {
+          creator_id: 2,
+          status: 'pending',
+          flowers_orders_attributes: [
+            { flower_id: 1, quantity: 1 },
+            { flower_id: 2, quantity: 2 }
+          ]
+        }
+      }
+
       tags 'Orders'
+      description 'Allows the user to replace an order. Only the creator of the order can update it'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :order, in: :body, schema: {
+        type: :object,
+        properties: {
+          order: { schema: { "$ref" => "#/components/schemas/order" } }
+        }
+      }
+
+      request_body_example value: order_data, name: 'order', summary: 'An order example'
       response(200, 'successful') do
         let(:id) { '123' }
 
