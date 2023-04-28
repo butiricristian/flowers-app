@@ -1,0 +1,22 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable
+
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
+    - config/initializers/**
+    - lib/tasks/**
+    - db/schema.rb
+
+Style/WordArray:
+  Exclude:
+    - db/schema.rb
