@@ -2,7 +2,8 @@ module Api
   module V1
     class OrdersController < BaseController
       def index
-        @orders = Order.all
+        @orders = Order.all.includes(:creator, flowers_orders: [:flower])
+        @orders = filter_by_status(params[:status])
         render json: orders_list
       end
 
@@ -28,7 +29,7 @@ module Api
 
       def order_params
         params.require(:order).permit(:creator_id, :status, :address,
-                                      flowers_orders_attributes: [:flower_id, :quantity])
+                                      flowers_orders_attributes: [:id, :flower_id, :quantity])
       end
 
       def error_response
@@ -37,6 +38,12 @@ module Api
 
       def orders_list
         OrderSerializer.new(@orders, include: [:creator, :flowers_orders]).serialized_json
+      end
+
+      def filter_by_status(status)
+        return @orders if status.blank?
+
+        @orders.where(status:)
       end
     end
   end

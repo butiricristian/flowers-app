@@ -19,8 +19,9 @@ end
 #
 # Indexes
 #
-#  index_flowers_orders_on_flower_id  (flower_id)
-#  index_flowers_orders_on_order_id   (order_id)
+#  index_flowers_orders_on_flower_id               (flower_id)
+#  index_flowers_orders_on_order_id                (order_id)
+#  index_flowers_orders_on_order_id_and_flower_id  (order_id,flower_id) UNIQUE
 #
 # Foreign Keys
 #

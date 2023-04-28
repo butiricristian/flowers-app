@@ -11,6 +11,16 @@ paths:
       - Orders
       security:
       - bearer_auth: []
+      parameters:
+      - name: status
+        in: query
+        description: Filter by order status
+        schema:
+          type: string
+          enum:
+          - pending
+          - delivered
+          - canceled
       responses:
         '200':
           description: successful
@@ -18,6 +28,8 @@ paths:
       summary: create order
       tags:
       - Orders
+      security:
+      - bearer_auth: []
       description: Allows the user to create an order.
       parameters: []
       responses:
@@ -39,6 +51,7 @@ paths:
                   order:
                     creator_id: 2
                     status: pending
+                    address: 5278 Davina Port, New Beatrice, VT 92626
                     flowers_orders_attributes:
                     - flower_id: 1
                       quantity: 1
@@ -56,6 +69,8 @@ paths:
       summary: update order
       tags:
       - Orders
+      security:
+      - bearer_auth: []
       description: Allows the user to update an order. Only the creator of the order
         can update it.
       parameters: []
@@ -77,36 +92,8 @@ paths:
                 value:
                   order:
                     status: delivered
-    put:
-      summary: update order
-      tags:
-      - Orders
-      description: Allows the user to replace an order. Only the creator of the order
-        can update it
-      parameters: []
-      responses:
-        '200':
-          description: successful
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                order:
-                  schema:
-                    "$ref": "#/components/schemas/order"
-            examples:
-              order:
-                summary: An order example
-                value:
-                  order:
-                    creator_id: 2
-                    status: pending
                     flowers_orders_attributes:
                     - flower_id: 1
-                      quantity: 1
-                    - flower_id: 2
                       quantity: 2
   "/users":
     post:

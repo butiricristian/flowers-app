@@ -16,3 +16,7 @@ Metrics/BlockLength:
     - config/initializers/**
     - lib/tasks/**
     - db/schema.rb
+
+Style/WordArray:
+  Exclude:
+    - db/schema.rb
