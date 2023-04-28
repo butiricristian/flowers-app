@@ -49,6 +49,13 @@ RSpec.describe 'api/v1/orders', type: :request do
             expect(JSON.parse(response.body)['data']).to eq([])
           end
         end
+
+        response(401, 'unauthorized') do
+          let(:order) { create(:order, status: :delivered) }
+          let(:Authorization) { nil }
+
+          run_test!
+        end
       end
 
       post('create order') do
@@ -90,6 +97,13 @@ RSpec.describe 'api/v1/orders', type: :request do
               }
             }
           end
+          run_test!
+        end
+
+        response(401, 'unauthorized') do
+          let(:order) { order_data }
+          let(:Authorization) { nil }
+
           run_test!
         end
       end
@@ -137,6 +151,23 @@ RSpec.describe 'api/v1/orders', type: :request do
               }
             }
           end
+          run_test!
+        end
+
+        response(401, 'unauthorized') do
+          let(:order) { order_data }
+          let(:Authorization) { nil }
+          let(:id) { initial_order.id }
+
+          run_test!
+        end
+
+        response(403, 'forbidden') do
+          let(:id) { initial_order.id }
+          let(:order) { order_data }
+          let(:other_user) { create(:user) }
+          let(:Authorization) { get_bearer(other_user) }
+
           run_test!
         end
       end
