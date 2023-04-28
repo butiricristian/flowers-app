@@ -1,7 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Flower, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "validate name" do
+    it "is valid" do
+      flower = build(:flower, name: Faker::Beer.brand)
+      expect(flower.valid?).to eq(true)
+    end
+
+    it "is not valid" do
+      flower = build(:flower, name: nil)
+      expect(flower.valid?).to eq(false)
+    end
+  end
 end
 
 # == Schema Information

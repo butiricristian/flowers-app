@@ -1,7 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "validate email" do
+    it "is valid" do
+      user = build(:user)
+      expect(user.valid?).to eq(true)
+    end
+
+    it "is not valid" do
+      user = build(:user, email: nil)
+      expect(user.valid?).to eq(false)
+    end
+  end
 end
 
 # == Schema Information

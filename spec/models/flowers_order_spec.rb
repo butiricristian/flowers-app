@@ -1,7 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe FlowersOrder, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "validate relationships" do
+    let(:user) { create(:user) }
+    let(:order) { create(:order, creator: user) }
+    let(:flower) { create(:flower) }
+
+    it "has order and flower" do
+      fo = build(:flowers_order, order:, flower:)
+      expect(fo.valid?).to eq(true)
+    end
+
+    it "has no order" do
+      fo = build(:flowers_order, flower:)
+      expect(fo.valid?).to eq(false)
+    end
+
+    it "has no flower" do
+      fo = build(:flowers_order, order:)
+      expect(fo.valid?).to eq(false)
+    end
+  end
 end
 
 # == Schema Information

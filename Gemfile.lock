@@ -93,6 +93,7 @@ GEM
       devise (~> 4.0)
       warden-jwt_auth (~> 0.6)
     diff-lcs (1.5.0)
+    docile (1.4.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -254,6 +255,12 @@ GEM
     rubocop-ast (1.28.0)
       parser (>= 3.2.1.0)
     ruby-progressbar (1.13.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     thor (1.2.1)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -293,6 +300,7 @@ DEPENDENCIES
   rspec-rails
   rswag (~> 2.9)
   rubocop
+  simplecov
   tzinfo-data
 
 RUBY VERSION

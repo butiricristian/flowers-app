@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :flower do
-    name { "MyString" }
-    species { "MyString" }
+    name { Faker::Beer.brand }
+    species { Faker::Beer.style }
     price { 1 }
   end
 end

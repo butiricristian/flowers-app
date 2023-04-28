@@ -100,6 +100,28 @@ RSpec.describe 'api/v1/orders', type: :request do
           run_test!
         end
 
+        response(200, 'validation errors') do
+          let(:order) do
+            order_data[:order][:flowers_orders_attributes][0][:flower_id] = flowers.first.id
+            order_data[:order][:flowers_orders_attributes][1][:flower_id] = flowers.second.id
+            order_data[:order][:address] = nil
+            order_data
+          end
+          let(:id) { initial_order.id }
+
+          after do |example|
+            example.metadata[:response][:content] = {
+              'application/json' => {
+                example: JSON.parse(response.body, symbolize_names: true)
+              }
+            }
+          end
+          run_test! do |response|
+            data = JSON.parse(response.body)
+            expect(data['message']).to include("The order could not be saved")
+          end
+        end
+
         response(401, 'unauthorized') do
           let(:order) { order_data }
           let(:Authorization) { nil }
@@ -152,6 +174,28 @@ RSpec.describe 'api/v1/orders', type: :request do
             }
           end
           run_test!
+        end
+
+        response(200, 'validation errors') do
+          let(:order) do
+            order_data[:order][:flowers_orders_attributes][0][:id] = flowers_order.id
+            order_data[:order][:flowers_orders_attributes][0][:flower_id] = flowers.first.id
+            order_data[:order][:address] = nil
+            order_data
+          end
+          let(:id) { initial_order.id }
+
+          after do |example|
+            example.metadata[:response][:content] = {
+              'application/json' => {
+                example: JSON.parse(response.body, symbolize_names: true)
+              }
+            }
+          end
+          run_test! do |response|
+            data = JSON.parse(response.body)
+            expect(data['message']).to include("The order could not be saved")
+          end
         end
 
         response(401, 'unauthorized') do

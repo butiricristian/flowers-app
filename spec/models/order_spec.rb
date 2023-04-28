@@ -1,7 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "validate address" do
+    let(:user) { create(:user) }
+    it "is valid" do
+      order = build(:order, address: Faker::Address.full_address, creator: user)
+      expect(order.valid?).to eq(true)
+    end
+
+    it "is not valid" do
+      order = build(:order, address: nil)
+      expect(order.valid?).to eq(false)
+    end
+  end
 end
 
 # == Schema Information

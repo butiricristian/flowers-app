@@ -35,7 +35,7 @@ module Api
       end
 
       def error_response
-        { message: "The order could not be created: #{@order.errors.full_messages}" }
+        { message: "The order could not be saved: #{@order.errors.full_messages}" }
       end
 
       def orders_list

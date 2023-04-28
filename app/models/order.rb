@@ -6,6 +6,8 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :flowers_orders
 
   enum status: %i[pending delivered canceled]
+
+  validates :address, presence: true
 end
 
 # == Schema Information

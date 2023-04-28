@@ -3,6 +3,8 @@ class Flower < ApplicationRecord
   has_many :orders, through: :flowers_orders
 
   monetize :price_cents
+
+  validates :name, presence: true
 end
 
 # == Schema Information
