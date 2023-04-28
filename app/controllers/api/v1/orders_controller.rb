@@ -9,6 +9,7 @@ module Api
 
       def create
         @order = Order.new(order_params)
+        @order.creator = current_user
         if @order.save
           render json: OrderSerializer.new(@order).serialized_json, status: :created
         else
@@ -29,7 +30,7 @@ module Api
       private
 
       def order_params
-        params.require(:order).permit(:creator_id, :status, :address,
+        params.require(:order).permit(:status, :address,
                                       flowers_orders_attributes: [:id, :flower_id, :quantity])
       end
 

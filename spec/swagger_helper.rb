@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'devise/jwt/test_helpers'
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
@@ -53,26 +54,16 @@ RSpec.configure do |config|
               items: { type: 'string' }
             }
           },
-          user_form: {
+          user: {
             type: 'object',
             properties: {
+              id: { type: 'integer' },
               email: { type: 'string' },
               password: { type: 'string' },
               username: { type: 'string', nullable: true },
               phone_number: { type: 'string', nullable: true }
             },
             required: %w[email password]
-          },
-          user: {
-            allOf: [
-              { "$ref" => "#/components/schemas/user_form" },
-              {
-                type: "object",
-                properties: {
-                  id: { type: 'string' }
-                }
-              }
-            ]
           },
           flower: {
             type: 'object',
@@ -81,9 +72,19 @@ RSpec.configure do |config|
               price: { type: 'integer' }
             }
           },
+          flowers_order: {
+            type: 'object',
+            properties: {
+              id: { type: 'integer' },
+              flower_id: { type: 'integer' },
+              order_id: { type: 'integer' },
+              quantity: { type: 'integer' }
+            }
+          },
           order: {
             type: 'object',
             properties: {
+              id: { type: 'integer' },
               creator_id: { type: 'integer' },
               address: { type: 'string' },
               status: {
@@ -91,6 +92,17 @@ RSpec.configure do |config|
                 enum: %w[pending delivered canceled]
               }
             }
+          },
+          order_form: {
+            allOf: [
+              { "$ref" => "#/components/schemas/order" },
+              {
+                type: 'object',
+                properties: {
+                  flowers_orders_attributes: { '$ref' => "#/components/schemas/flowers_order" }
+                }
+              }
+            ]
           }
         }
       }

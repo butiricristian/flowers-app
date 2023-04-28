@@ -23,52 +23,8 @@ RSpec.describe 'devise/registrations', type: :request do
 
       request_body_example value: user_data, name: 'user_sign_up', summary: 'A user sign up example'
 
-      response(200, 'successful', use_as_request_example: true) do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    patch('update registration') do
-      tags 'Registration'
-
-      response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    put('update registration') do
-      tags 'Registration'
-
-      response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    delete('delete registration') do
-      tags 'Registration'
-
-      response(200, 'successful') do
+      response(201, 'successful', use_as_request_example: true) do
+        let(:user) { user_data }
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

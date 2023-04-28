@@ -33,7 +33,7 @@ paths:
       description: Allows the user to create an order.
       parameters: []
       responses:
-        '200':
+        '201':
           description: successful
       requestBody:
         content:
@@ -42,16 +42,14 @@ paths:
               type: object
               properties:
                 order:
-                  schema:
-                    "$ref": "#/components/schemas/order"
+                  "$ref": "#/components/schemas/order_form"
             examples:
               order:
                 summary: An order example
                 value:
                   order:
-                    creator_id: 2
                     status: pending
-                    address: 89677 Schmidt Ramp, Cummerataburgh, ND 84606-0767
+                    address: 807 Jones Club, Zulamouth, OH 37113
                     flowers_orders_attributes:
                     - flower_id: 1
                       quantity: 1
@@ -84,17 +82,17 @@ paths:
               type: object
               properties:
                 order:
-                  schema:
-                    "$ref": "#/components/schemas/order"
+                  "$ref": "#/components/schemas/order_form"
             examples:
               order:
                 summary: An order example
                 value:
                   order:
                     status: delivered
-                    address: Suite 979 521 Lenard Junctions, Durganberg, UT 32132
+                    address: 454 Funk Cliff, Awildachester, NJ 57324
                     flowers_orders_attributes:
-                    - flower_id: 1
+                    - id: 1
+                      flower_id: 1
                       quantity: 2
   "/users":
     post:
@@ -207,9 +205,11 @@ components:
         type: array
         items:
           type: string
-    user_form:
+    user:
       type: object
       properties:
+        id:
+          type: integer
         email:
           type: string
         password:
@@ -223,13 +223,6 @@ components:
       required:
       - email
       - password
-    user:
-      allOf:
-      - "$ref": "#/components/schemas/user_form"
-      - type: object
-        properties:
-          id:
-            type: string
     flower:
       type: object
       properties:
@@ -237,9 +230,22 @@ components:
           type: string
         price:
           type: integer
+    flowers_order:
+      type: object
+      properties:
+        id:
+          type: integer
+        flower_id:
+          type: integer
+        order_id:
+          type: integer
+        quantity:
+          type: integer
     order:
       type: object
       properties:
+        id:
+          type: integer
         creator_id:
           type: integer
         address:
@@ -250,3 +256,10 @@ components:
           - pending
           - delivered
           - canceled
+    order_form:
+      allOf:
+      - "$ref": "#/components/schemas/order"
+      - type: object
+        properties:
+          flowers_orders_attributes:
+            "$ref": "#/components/schemas/flowers_order"
